@@ -4,9 +4,9 @@
 ## What is appendicitis?
 -	is among the commonest childhood diseases, accounting for a third of admissions for abdominal pain incidence is highest between 10 and 19 years of age. Perforation rates are significantly higher in preschool children than in older children or adults.
 ## Symptoms
--	Appendicitis is a serious condition that requires prompt treatment, as the infected appendix can rupture, causing a potentially life-threatening spread of infection throughout the abdomen. Common symptoms of appendicitis include sudden pain in the lower right side of the abdomen, nausea, vomiting, fever, loss of appetite, and constipation or diarrhea.
+- Appendicitis is a serious condition that requires prompt treatment, as the infected appendix can rupture, causing a potentially life-threatening spread of infection throughout the abdomen. Common symptoms of appendicitis include sudden **`pain`** in the **`lower right`** side of the **`abdomen`**, nausea, vomiting, fever, loss of appetite, and constipation or diarrhea.
 ## Causes
--	Blockage in the appendix, such as a buildup of stool, mucus, or other foreign material, which can lead to bacterial growth and infection. If left untreated, the infected appendix can rupture
+- A **`blockage`** in the lining of the appendix that results in infection is the likely cause of appendicitis. The **`bacteria`** multiply rapidly, causing the appendix to become **`inflamed`**, swollen and filled with pus. If not treated promptly, the appendix can rupture.
 ## Diagnosis
 -	Physical examination, imaging tests such as an abdominal ultrasound or CT scan, and sometimes a blood Laparoscopy
 -	Treatment
