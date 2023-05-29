@@ -9,7 +9,7 @@
 - A **`blockage`** in the lining of the appendix that results in infection is the likely cause of appendicitis. The **`bacteria`** multiply rapidly, causing the appendix to become **`inflamed`**, swollen and filled with pus. If not treated promptly, the appendix can rupture.
 ## Diagnosis
 -	Physical examination, imaging tests such as an abdominal ultrasound or CT scan, and sometimes a blood Laparoscopy
--	Treatment
+## Treatment
 -	Antibiotics, Surgical
 ## Pain Point
 -	Appendicitis can present with a wide range of symptoms, making it difficult to accurately diagnose without additional medical tests.
