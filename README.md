@@ -1,3 +1,5 @@
+<img src="https://domf5oio6qrcr.cloudfront.net/medialibrary/9668/appendix-appendicitis.jpg"  width="600" height="600">
+
 # Appendicitis Prediction
 ## What is appendicitis?
 -	is among the commonest childhood diseases, accounting for a third of admissions for abdominal pain incidence is highest between 10 and 19 years of age. Perforation rates are significantly higher in preschool children than in older children or adults.
