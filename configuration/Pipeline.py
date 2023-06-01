@@ -8,7 +8,7 @@ from sklearn.impute import KNNImputer
 
 
 class Pipeline():
-    def __init__(self, raw_df: pd.DataFrame):
+    def __init__(self):
         self.clean_z_test_cols = {
             'height': 0.05,
             'body_weight': 0.01,
@@ -17,7 +17,8 @@ class Pipeline():
                                   'Urine Color', 'Urine Sugar', 'Urine Leukocytes', 'Peritonitis/abdominal guarding', 'Migration of pain',
                                   'Tenderness in right lower quadrant', 'Rebound tenderness',
                                   'Cough tenderness', 'Nausea/vomiting', 'Anorexia', 'Dysuria', 'Stool']
-
+        self.binary_dict = {'male': 0, 'female': 1, 'no': 0, 'yes': 1}
+        self.binary_dict_lab = {'no': 1, 'yes': 2}
         self.categ_dict = {'Negative': 1,
                            'Trace': 2, 'Positive': 2,
                            'Positive +1': 3, 'Positive +2': 4,
@@ -31,7 +32,6 @@ class Pipeline():
                                  'Amber': 6,
                                  'Brown': 7,
                                  'Red': 8}
-        self.raw_df = raw_df
 
     def clean_outliers_Z_test(self, df: pd.DataFrame, x, column, alpha):
         data = df.loc[df[column].isna()
@@ -66,16 +66,43 @@ class Pipeline():
         return df
 
     def imputation(self, df: pd.DataFrame):
-        # Only numerical cols
-        df_numeric = df.select_dtypes(include=[np.number])
-        # KNN Imuter
-        imputer = KNNImputer(n_neighbors=3)
-        imputed = imputer.fit_transform(df_numeric)
-        knn_df_imputed = pd.DataFrame(imputed, columns=df_numeric.columns)
-        # Digit
-        for col in self.categoraical_cols:
-            knn_df_imputed[col] = knn_df_imputed[col].apply(
-                lambda x: int(round(x)))
+        if df.shape[0] != 1:
+            # Only numerical cols
+            df_numeric = df.select_dtypes(include=[np.number])
+
+            # KNN Imuter
+            imputer = KNNImputer(n_neighbors=3)
+            imputed = imputer.fit_transform(df_numeric)
+            knn_df_imputed = pd.DataFrame(imputed, columns=df_numeric.columns)
+
+            # Digit
+            for col in self.categoraical_cols:
+                knn_df_imputed[col] = knn_df_imputed[col].apply(
+                    lambda x: int(round(x)))
+
+        else:
+            try:
+                single_df = df.copy()
+                try:
+                    knn_df_imputed = pd.read_csv(
+                        'repository/data_prep/KNN_Appendicitis.csv',)
+                except FileNotFoundError:
+                    knn_df_imputed = pd.read_csv(
+                        r'D:\Repo\ML\Classification\Appendicitis\repository\data_prep\KNN_Appendicitis.csv')
+                    
+                df_concat = pd.concat([knn_df_imputed, single_df])
+                # KNN Imuter
+                imputer = KNNImputer(n_neighbors=3)
+                imputed = imputer.fit_transform(df_concat)
+                knn_df_imputed = pd.DataFrame(imputed, columns=df_concat.columns)
+                df_concat = self.re_calculate_score(knn_df_imputed)
+                for col in self.categoraical_cols:
+                    df_concat[col] = df_concat[col].apply(
+                        lambda x: int(round(x)))
+            except ValueError as e:
+                print(f'ERROR WHERE!!!!!!!!! {e.args[0]}')
+            return df_concat.tail(1)
+
         return knn_df_imputed
 
     def extract_2_condition(self, row, keywords_1, keywords_2):
@@ -110,6 +137,7 @@ class Pipeline():
             return None
 
     def feature_engineering(self, df: pd.DataFrame):
+
         # Prefix ไม่มีอาการ
         not_or_no = '(ไม่|ไม่มี)'
         # Prefix มีอาการ; ต้องไม่มีคำว่า (ไม่มี or ไม่)นำหน้าอาการ
@@ -407,7 +435,7 @@ class Pipeline():
         score = 0
         if row['Migration of pain'] == 2:
             score += 1
-        if row['Anorexia'] == 2 or row['Urine Ketone'] != 'Negative':
+        if row['Anorexia'] == 2 or row['Urine Ketone'] != 1:
             score += 1
         if row['Nausea/vomiting'] == 2:
             score += 1
@@ -427,7 +455,7 @@ class Pipeline():
         score = 0
         if row['Migration of pain'] == 2:
             score += 1
-        if row['Anorexia'] == 1 or row['Urine Ketone'] != 'Negative':
+        if row['Anorexia'] == 1 or row['Urine Ketone'] != 1:
             score += 1
         if row['Nausea/vomiting'] == 2:
             score += 1
@@ -452,28 +480,38 @@ class Pipeline():
         return df
 
     def encoding(self, df: pd.DataFrame):
-        # Binarization (0-1)
-        df['sex'] = df['sex'].map(
-            {'male': 0, 'female': 1})
-        df['alcohol'] = df['alcohol'].map(
-            {'no': 0, 'yes': 1})
-        df['exercise'] = df['exercise'].map(
-            {'no': 0, 'yes': 1})
-        df['smoking'] = df['smoking'].map(
-            {'no': 0, 'yes': 1})
-        # Ordinal Scale
-        df['Urine WBC'] = df['Urine WBC'].map(self.categ_dict)
-        df['Urine RBC'] = df['Urine RBC'].map(self.categ_dict)
-        df['Leukocytes'] = df['Leukocytes'].map(self.categ_dict)
-        df['Urine Ketone'] = df['Urine Ketone'].map(self.categ_dict)
-        df['Urine Color'] = df['Urine Color'].map(self.urine_color_dict)
-        df['Urine Sugar'] = df['Urine Sugar'].map(self.categ_dict)
-        df['Urine Leukocytes'] = df['Urine Leukocytes'].map(self.categ_dict)
+        mappings = {
+            'sex': self.binary_dict,
+            'alcohol': self.binary_dict,
+            'smoking': self.binary_dict,
+            'Rebound tenderness': self.binary_dict_lab,
+            'Cough tenderness': self.binary_dict_lab,
+            'Nausea/vomiting': self.binary_dict_lab,
+            'Anorexia': self.binary_dict_lab,
+            'Dysuria': self.binary_dict_lab,
+            'Migration of pain': self.binary_dict_lab,
+            'Tenderness in right lower quadrant': self.binary_dict_lab,
+            'Urine WBC': self.categ_dict,
+            'Urine RBC': self.categ_dict,
+            'Leukocytes': self.categ_dict,
+            'Urine Ketone': self.categ_dict,
+            'Urine Color': self.urine_color_dict,
+            'Urine Sugar': self.categ_dict,
+            'Urine Leukocytes': self.categ_dict,
+            'Peritonitis/abdominal guarding': {'no': 1, 'generalized': 2, 'localized': 3},
+            'Stool': {'normal': 1, 'obstipation': 2, 'diarrhea': 3}
+        }
+
+        for col, mapping in mappings.items():
+            if col in df.columns:
+                df[col] = df[col].map(mapping)
+
         return df
 
     def preprocessing(self, df: pd.DataFrame):
         df = self.data_cleaning(df)
-        df = self.feature_engineering(df)
+        if 'Conditions' in list(df.columns):
+            df = self.feature_engineering(df)
         df = self.encoding(df)
         df = self.imputation(df)
         df = self.re_calculate_score(df)
