@@ -16,3 +16,6 @@
 ## Machine Learning 
 -	ML can be used to predict appendicitis. The process involves training a model on a dataset of patients' medical records and imaging results to learn patterns and relationships between symptoms, demographics, and test results that are indicative of appendicitis. 
 -	The trained model can then be used to make predictions on new, unseen cases. Some commonly used machine learning algorithms for this task include logistic regression, decision trees, and support vector machines. However, it is important to note that machine learning should be used as a tool to aid in the diagnosis of appendicitis, and not as a replacement for clinical judgment.
+## Work Flow 
+![ml_flow](https://github.com/Pisit-Janthawee/Classification-Appendicitis-Prediction/assets/133638243/5e34b4cb-ed3b-4452-aa7f-e72904c1ffff)
+
