@@ -3,6 +3,34 @@
 <img src="https://domf5oio6qrcr.cloudfront.net/medialibrary/9668/appendix-appendicitis.jpg"  width="600" height="600">
 
 # Appendicitis Prediction
+Overview & Objective:
+
+Overview: In this project, we will focus on building a binary classification model for Appendicitis prediction.
+
+Objective: To create a predictive model for Appendicitis that can aid in early detection and diagnosis.
+
+Business Type: Healthcare and Medical
+
+Business Objective:
+
+Facilitate early detection and diagnosis of Appendicitis, contributing to timely medical interventions.
+Improve patient outcomes by providing healthcare professionals with a reliable tool for Appendicitis prediction.
+
+Learning Problems: Binary Classification
+
+Reason for Choosing this Project: Addressing a critical healthcare challenge by leveraging machine learning for Appendicitis prediction.
+
+Expected Result: Probabilities of Disease 
+
+Utilization of Results: Integration of the predictive model into healthcare systems for assisting medical professionals in Appendicitis diagnosis.
+
+Benefits of this Project:
+
+- Early detection of Appendicitis, leading to timely medical interventions.
+- Improved patient outcomes and healthcare decision-making.
+- Efficient utilization of machine learning in healthcare for predictive analytics.
+- Insights into the correlation between diagnostic features and Appendicitis, contributing to medical research and knowledge.
+= Enhanced capabilities for healthcare professionals in diagnosing and managing Appendicitis cases.
 ## What is appendicitis?
 -	is among the commonest childhood diseases, accounting for a third of admissions for abdominal pain incidence is highest between 10 and 19 years of age. Perforation rates are significantly higher in preschool children than in older children or adults.
 ## Symptoms
