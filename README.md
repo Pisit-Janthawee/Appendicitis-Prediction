@@ -1,3 +1,5 @@
+<img src="https://github.com/Pisit-Janthawee/ML-BinaryClassification-Appendicitis-Prediction/blob/main/images/appx_deploy.png" align="center">
+
 <img src="https://domf5oio6qrcr.cloudfront.net/medialibrary/9668/appendix-appendicitis.jpg"  width="600" height="600">
 
 # Appendicitis Prediction
